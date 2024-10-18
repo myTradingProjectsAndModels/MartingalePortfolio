@@ -69,16 +69,14 @@ async def martingale(symbol : str, limit : int, q : float, margin: float, type: 
         print("Datetime:{} ,Symbol: {}".format(datetime.datetime.utcnow(), symbol))
         print(algo.um_position(symbol)[['symbol', 'positionAmt', 'entryPrice', 'leverage', 'isolated', 'PNL%']])
         print("===========================================================")
-    return None
 
-async def coro(symbol, limit, q, margin, type, on_off):
+async def coro(symbol, limit, q, margin, type, on_off) -> None:
     await martingale(  symbol= symbol,
                         limit= limit,
                         q= q,
                         margin= margin,
                         type= type,
-                        on_off= on_off
-                        )
+                        on_off= on_off)
 
 async def task(symbol : str, limit : int, q : float, margin: float, type: int, on_off: bool) -> None:
     await asyncio.create_task(coro= coro( symbol= symbol,
@@ -86,8 +84,7 @@ async def task(symbol : str, limit : int, q : float, margin: float, type: int, o
                                                 q= q,
                                                 margin= margin,
                                                 type= type,
-                                                on_off= on_off
-                                            )) 
+                                                on_off= on_off)) 
 
 async def asyncio_pool(path: str):
     stream = open(path, "r")
@@ -116,7 +113,7 @@ async def asyncio_pool(path: str):
 
 def main():
     def exec():
-        asyncio.run(asyncio_pool("C:/trading/martingale/asyncio_pool/test_management.json"))
+        asyncio.run(asyncio_pool("managementPath"))
     start_time = {    datetime.datetime.strptime("00:00", "%M:%S").time(), 
                     datetime.datetime.strptime("05:00", "%M:%S").time(), 
                     datetime.datetime.strptime("10:00", "%M:%S").time(), 
